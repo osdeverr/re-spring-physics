@@ -11,6 +11,7 @@
 #include "creatures/creature.hpp"
 #include "camera/camera-controller.hpp"
 #include "../graphics/scene-rendering/particles/particle-host.hpp"
+#include "controllable-creature.hpp"
 #include <random>
 
 class SpringPhysicsApp : public GeneralApp {
@@ -23,27 +24,12 @@ class SpringPhysicsApp : public GeneralApp {
 
     Graphics::GeometryObject* object = nullptr;
 
-    float m_throttle = 0.0f;
-    float m_engine_power = 10.0f;
-
-    int m_left_aileron_spring = 0;
-    int m_right_aileron_spring = 0;
-
-    int m_left_elevator_spring = 0;
-    int m_right_elevator_spring = 0;
-
-    float m_left_aileron_muscle_length = 0;
-    float m_right_aileron_muscle_length = 0;
-
-    float m_left_elevator_muscle_length = 0;
-    float m_right_elevator_muscle_length = 0;
-
     Vec3f m_input_airplane_controls {};
     Vec3f m_real_airplane_controls {};
 
     Graphics::SceneTexture* m_runway_texture = nullptr;
 
-    std::unique_ptr<Creature> m_creature {};
+    std::unique_ptr<ControllableCreature> m_creature {};
 
     void create_window(int width, int height);
 
@@ -51,6 +37,7 @@ class SpringPhysicsApp : public GeneralApp {
     void clear_window();
 
     bool m_free_camera = false;
+    float m_throttle = 0.0f;
 
 public:
 

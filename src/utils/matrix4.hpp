@@ -25,11 +25,11 @@ public:
 
     void set(const ValueType (&other)[16]);
 
-    ValueType transform_x(ValueType x, ValueType y, ValueType z) const { return x * m_data[0] + y * m_data[4] + z * m_data[8]; }
-    ValueType transform_y(ValueType x, ValueType y, ValueType z) const { return x * m_data[1] + y * m_data[5] + z * m_data[9]; }
-    ValueType transform_z(ValueType x, ValueType y, ValueType z) const { return x * m_data[2] + y * m_data[6] + z * m_data[10]; }
+    ValueType transform_x(ValueType x, ValueType y, ValueType z, ValueType w = 1) const { return x * m_data[0] + y * m_data[4] + z * m_data[8] + w * m_data[12]; }
+    ValueType transform_y(ValueType x, ValueType y, ValueType z, ValueType w = 1) const { return x * m_data[1] + y * m_data[5] + z * m_data[9] + w * m_data[13]; }
+    ValueType transform_z(ValueType x, ValueType y, ValueType z, ValueType w = 1) const { return x * m_data[2] + y * m_data[6] + z * m_data[10] + w * m_data[14]; }
 
-    Matrix4<ValueType> inverse();
+    Matrix4<ValueType> inverse() const;
 
     void set_projection_matrix(ValueType fov, ValueType aspect, ValueType near, ValueType far);
     void set_orthogonal_matrix(ValueType left, ValueType right, ValueType bottom, ValueType top, ValueType near, ValueType far);
@@ -187,7 +187,7 @@ void Matrix4<ValueType>::reset() {
 }
 
 template<typename ValueType>
-Matrix4<ValueType> Matrix4<ValueType>::inverse() {
+Matrix4<ValueType> Matrix4<ValueType>::inverse() const{
     ValueType a_2323 = m_data[2 * 4 + 2] * m_data[3 * 4 + 3] - m_data[2 * 4 + 3] * m_data[3 * 4 + 2];
     ValueType a_1323 = m_data[2 * 4 + 1] * m_data[3 * 4 + 3] - m_data[2 * 4 + 3] * m_data[3 * 4 + 1];
     ValueType a_1223 = m_data[2 * 4 + 1] * m_data[3 * 4 + 2] - m_data[2 * 4 + 2] * m_data[3 * 4 + 1];

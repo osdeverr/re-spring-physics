@@ -6,6 +6,7 @@
 #include "camera/follow-creature-camera.hpp"
 #include "camera/free-camera-controller.hpp"
 #include "models/airplane-creature.hpp"
+#include "models/car/car-creature.hpp"
 
 SpringPhysicsApp::SpringPhysicsApp() : GeneralApp() {
     create_window(2200, 1600);
@@ -160,4 +161,5 @@ void SpringPhysicsApp::on_key_release(sf::Keyboard::Key key) {
 
 void SpringPhysicsApp::build_model() {
     m_creature = std::make_unique<AirplaneCreature>(m_world.get());
+//    m_creature = std::make_unique<CarCreature>(m_world.get());
 }

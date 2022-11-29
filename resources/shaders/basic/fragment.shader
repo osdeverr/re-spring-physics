@@ -12,8 +12,7 @@ uniform vec3 u_ambient_light;
 uniform sampler2D u_shadow_map;
 
 float grid() {
-  float grid_factor = (mod(vertex_position.x, 2) > 1 ? 1 : -1) *
-  (mod(vertex_position.z, 2) > 1 ? 1 : -1);
+  float grid_factor = (mod(vertex_position.x / 5, 4) > 1 ? 1 : -1) * (mod(vertex_position.z / 5, 4) > 1 ? 1 : -1);
 
   float depth = 1 / (screen_position.w * 0.1 + 1);
   grid_factor = grid_factor * depth + 0.5 * (1 - depth);

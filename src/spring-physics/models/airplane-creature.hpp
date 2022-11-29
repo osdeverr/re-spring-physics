@@ -15,7 +15,7 @@ public:
     };
 
     float m_throttle = 0.0f;
-    float m_engine_power = 10.0f;
+    float m_engine_power = 13.0f;
 
     int m_left_aileron_spring = 0;
     int m_right_aileron_spring = 0;

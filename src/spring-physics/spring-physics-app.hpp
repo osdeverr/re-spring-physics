@@ -12,6 +12,8 @@
 #include "camera/camera-controller.hpp"
 #include "../graphics/scene-rendering/particles/particle-host.hpp"
 #include "controllable-creature.hpp"
+#include "objects/surface-triangle-object.hpp"
+#include "objects/map-object.hpp"
 #include <random>
 
 class SpringPhysicsApp : public GeneralApp {
@@ -21,6 +23,7 @@ class SpringPhysicsApp : public GeneralApp {
     std::unique_ptr<World> m_world {};
     std::unique_ptr<PerspectiveCamera> m_camera {};
     std::unique_ptr<CameraController> m_camera_controller {};
+    std::unique_ptr<MapObject> m_map_object {};
 
     Graphics::GeometryObject* object = nullptr;
 
@@ -52,5 +55,5 @@ public:
     void on_key_press(sf::Keyboard::Key key) override;
     void on_key_release(sf::Keyboard::Key key) override;
 
-    void build_model();
+    void build_model(const Matrix4f& transform);
 };

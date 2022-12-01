@@ -192,7 +192,11 @@ void GeometryPool::copy_geometry(int offset, const std::vector<SceneVertex>& ver
 
     for(auto &vertex : vertices) {
         for(int i = 0; i < 3; i++) storage[offset + i + 0] = vertex.m_position[i];
-        for(int i = 0; i < 3; i++) storage[offset + i + 3] = vertex.m_normal[i];
+//        for(int i = 0; i < 3; i++) storage[offset + i + 3] = vertex.m_normal[i];
+
+        storage[offset + 3] = vertex.m_normal[0];
+        storage[offset + 4] = vertex.m_normal[1];
+        storage[offset + 5] = vertex.m_normal[2];
 
         *((int*)&storage[offset + SceneVertex::index_offset]) = matrix_index;
         *((int*)&storage[offset + SceneVertex::material_offset]) = vertex.m_material->get_buffer_index();
@@ -230,6 +234,7 @@ Material* GeometryPool::create_material() {
     m_materials.insert(material);
     return material;
 }
+
 
 void GeometryPool::destroy_material(Material* material) {
     m_material_buffer_index_pool.release_index(material->get_buffer_index());

@@ -6,7 +6,7 @@
 #include "creature-config.hpp"
 #include "../objects/muscle.hpp"
 #include "../../utils/vec2.hpp"
-#include "../objects/surface-object.hpp"
+#include "../objects/creature-triangle-object.hpp"
 #include "../objects/jet-object.hpp"
 
 class Creature : public WorldObject {
@@ -14,7 +14,7 @@ class Creature : public WorldObject {
     std::vector<SpringObject*> m_springs {};
     std::vector<Muscle*> m_muscles {};
     std::vector<JetObject*> m_jet_objects {};
-    std::vector<SurfaceObject*> m_surfaces {};
+    std::vector<CreatureTriangleObject*> m_surfaces {};
 
 public:
     Creature(World* world, const CreatureConfig& config);
@@ -25,7 +25,7 @@ public:
 
     const std::vector<VertexObject*>& get_vertices() { return m_vertices; }
     const std::vector<SpringObject*>& get_springs() { return m_springs; }
-    const std::vector<SurfaceObject*>& get_surfaces() { return m_surfaces; }
+    const std::vector<CreatureTriangleObject*>& get_surfaces() { return m_surfaces; }
     const std::vector<Muscle*>& get_muscles() { return m_muscles; }
     const std::vector<JetObject*>& get_jet_objects() { return m_jet_objects; }
 

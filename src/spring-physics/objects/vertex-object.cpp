@@ -33,3 +33,10 @@ void VertexObject::create_colored_mesh(const Vec3f& color) {
 
     m_geometry_object = geometry_pool->create_object({ generator.get_mesh() }, nullptr);
 }
+
+void VertexObject::tick(float dt) {
+    if(!m_geometry_object) return;
+
+    Vec3f& position = m_physics_vertex->m_position;
+    m_geometry_object->set_transform(Matrix4f::translation_matrix(position.x, position.y, position.z));
+}

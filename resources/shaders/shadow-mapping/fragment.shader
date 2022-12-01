@@ -30,7 +30,13 @@ float calculate_specular(vec3 normal) {
 void main() {
 
   vec3 normal = normalize(vertex_normal);
-  if(!gl_FrontFacing) normal = -normal;
+
+  // If the normal vector is pointing away from the camera, invert it,
+  // so we get the correct lighting.
+
+  if (dot(normal, u_camera_position - vertex_position) < 0) {
+      normal = -normal;
+  }
 
   float diffuse = max(0, -dot(normal, u_light_direction));
   float specular = calculate_specular(normal);

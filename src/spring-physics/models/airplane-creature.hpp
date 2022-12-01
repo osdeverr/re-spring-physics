@@ -5,7 +5,7 @@
 
 class AirplaneCreature : public ControllableCreature {
 public:
-    AirplaneCreature(World* world);
+    AirplaneCreature(World* world, const Matrix4f& transform);
     virtual ~AirplaneCreature() = default;
 
     void set_controls(Vec3f controls) override;

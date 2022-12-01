@@ -43,7 +43,7 @@ Creature::Creature(World *world, const CreatureConfig &config) : WorldObject(wor
     }
 
     for (auto &surface_config: config.m_surfaces) {
-        auto surface = new SurfaceObject(world,
+        auto surface = new CreatureTriangleObject(world,
                                          m_vertices[surface_config.m_vertex_a_index]->get_physics_vertex(),
                                          m_vertices[surface_config.m_vertex_b_index]->get_physics_vertex(),
                                          m_vertices[surface_config.m_vertex_c_index]->get_physics_vertex());

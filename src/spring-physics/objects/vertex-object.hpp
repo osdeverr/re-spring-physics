@@ -18,12 +18,7 @@ public:
     PhysicsVertex* get_physics_vertex() { return m_physics_vertex.get(); }
     Graphics::GeometryObject* get_geometry_object() { return m_geometry_object; }
 
-    void tick(float dt) override {
-        if(!m_geometry_object) return;
-
-        Vec3f& position = m_physics_vertex->m_position;
-        m_geometry_object->set_transform(Matrix4f::translation_matrix(position.x, position.y, position.z));
-    }
+    void tick(float dt) override;
 
     void create_colored_mesh(const Vec3f& color);
 };

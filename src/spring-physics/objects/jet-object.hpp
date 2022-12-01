@@ -19,19 +19,13 @@ public:
 
     ~JetObject() override;
 
-    void set_max_force(float force) {
-        m_max_force = force;
-    }
+    void set_max_force(float force);
 
-    float get_max_force() const {
-        return m_max_force;
-    }
+    float get_max_force() const;
 
     void tick(float dt) override;
 
     void create_colored_mesh(const Vec3f &color);
 
-    PhysicsJet *get_physics_jet() {
-        return m_physics_jet.get();
-    }
+    PhysicsJet *get_physics_jet();
 };

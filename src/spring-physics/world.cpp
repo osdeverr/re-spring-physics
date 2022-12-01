@@ -20,7 +20,23 @@ void World::add_floor() {
     m_floor_material->set_color({0.15, 0.5, 0.2});
     m_floor_material->set_grid(true);
 
-    generator.add_cube({0, -0.05, 0}, {10000, 0.1, 10000}, m_floor_material);
+    generator.add_cube({0, -0.05, 0}, {1000, 0.1, 1000}, m_floor_material);
     m_floor = m_renderer->get_geometry_pool()->create_object({generator.get_mesh()}, nullptr);
     generator.reset();
+}
+
+World::World() {
+    m_physics_engine = std::make_unique<ConcurrentPhysicsEngine>();
+    m_renderer = std::make_unique<Graphics::SceneRenderer>();
+    m_particle_host = std::make_unique<Graphics::ParticleHost>();
+
+    add_floor();
+}
+
+World::~World() {
+    m_renderer->get_geometry_pool()->destroy_material(m_floor_material);
+}
+
+std::vector<std::unique_ptr<SurfaceTriangleObject>> &World::get_surface_mesh() {
+    return m_surface_mesh;
 }

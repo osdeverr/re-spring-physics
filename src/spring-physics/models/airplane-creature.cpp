@@ -5,8 +5,12 @@
 #include "builder/model-builder.hpp"
 #include "builder/wheel.hpp"
 
-AirplaneCreature::AirplaneCreature(World *world) : m_world(world) {
+AirplaneCreature::AirplaneCreature(World *world, const Matrix4f &transform) : m_world(world) {
     ModelBuilder::Builder builder;
+
+    builder.get_state().set_matrix(transform
+                                   * Matrix4f::translation_matrix(0.0f, 1.0f, 0.0f)
+                                   * Matrix4f::scale_matrix(0.3f, 0.3f, 0.3f));
 
     // Build a cube with 8 vertices and 12 edges
 
@@ -257,11 +261,6 @@ AirplaneCreature::AirplaneCreature(World *world) : m_world(world) {
     builder.jet(2, 3, m_engine_power / 2 * top_thrust_fraction);
     builder.jet(4, 17, m_engine_power / 2 * bottom_fraction);
     builder.jet(6, 7, m_engine_power / 2 * top_thrust_fraction);
-
-    // Scale the model
-
-    builder.scale({0.3f, 0.3f, 0.3f});
-    builder.translate({0.0f, 1.0f, 0.0f});
 
     builder.calculate_mass();
 

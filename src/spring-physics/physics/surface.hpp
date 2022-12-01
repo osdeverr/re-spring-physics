@@ -10,11 +10,7 @@ struct PhysicsSurface {
     float m_air_friction = 0.01;
     float m_air_density = 0.3;
 
-    PhysicsSurface(PhysicsVertex* vertex_a, PhysicsVertex* vertex_b, PhysicsVertex* vertex_c) {
-        m_vertex_a = vertex_a;
-        m_vertex_b = vertex_b;
-        m_vertex_c = vertex_c;
-    }
+    PhysicsSurface(PhysicsVertex* vertex_a, PhysicsVertex* vertex_b, PhysicsVertex* vertex_c);
 
     void force_tick() const;
 };

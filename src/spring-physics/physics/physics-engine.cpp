@@ -8,6 +8,7 @@
 void ConcurrentPhysicsEngine::tick() {
     for(int i = 0; i < m_substeps_count; i++) {
         m_clear_forces = i == m_substeps_count - 1;
+        m_terrain.ensure_valid();
         for(auto &thread: m_threads) thread->run_async();
         for(auto &thread: m_threads) thread->wait();
     }

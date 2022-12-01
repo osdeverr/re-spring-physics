@@ -10,7 +10,7 @@ find_package(FreeImage REQUIRED)
 
 set(CMAKE_CXX_STANDARD 20)
 
-set(CMAKE_CXX_FLAGS "-O0 -fsanitize=address")
+set(CMAKE_CXX_FLAGS "-O3 -fsanitize=address")
 file(GLOB_RECURSE files "${CMAKE_SOURCE_DIR}/src/*.cpp" "${CMAKE_SOURCE_DIR}/src/*.hpp")
 add_executable(opengl_flying_sim ${files})
 target_link_libraries(opengl_flying_sim sfml-graphics sfml-audio GLEW::GLEW OpenGL::GL ${FREEIMAGE_LIBRARIES})

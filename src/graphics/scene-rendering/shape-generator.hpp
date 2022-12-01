@@ -47,7 +47,7 @@ public:
 
     std::vector<Graphics::SceneVertex> &get_mesh() { return m_mesh; }
 
-    void reset();;
+    void reset();
 
     void add_triangle(const Vec3f &p1, const Vec3f &p2, const Vec3f &p3, Graphics::Material* material);
 

@@ -30,7 +30,7 @@ public:
 
         float hub_width = 2;
         float hub_height = 1;
-        float wheel_width = 0.5;
+        float wheel_width = 0.7;
 
         Suspension suspension{};
 
@@ -68,11 +68,13 @@ public:
 
         float strength = m_builder.get_state().m_spring_strength;
         m_builder.get_state().m_spring_strength = 300;
+        m_builder.get_state().m_spring_damping = 10;
 
         m_builder.spring(body_point_up, wheel_vertex);
         m_builder.spring(body_point_up_back, wheel_vertex);
 
         m_builder.get_state().m_spring_strength = strength;
+        m_builder.get_state().m_spring_damping = 3;
 
         suspension.wheel_anchor1 = wheel_vertex;
         suspension.wheel_anchor2 = wheel_vertex_in;
@@ -86,27 +88,26 @@ public:
     }
 
     void build() {
-
-//        m_builder.m_vertex_weight = 1.0f;
-        // The car is headed in the negative x direction
+        // The car is heading in the -x direction
 
         m_builder.get_state().m_spring_strength = 5000;
 
+        auto matrix = m_builder.get_state().get_matrix();
         auto caster_matrix = Matrix4f::rotation_z_matrix(-0.1f);
 
-        m_builder.get_state().set_matrix(caster_matrix * Matrix4f::translation_matrix(-2, 3, -0.7));
-        Suspension front_left_suspension = wheel_suspension({}, Vec3f(0, 0, -1), 0.0f, 1.5);
+        m_builder.get_state().set_matrix(caster_matrix * Matrix4f::translation_matrix(-1.5, 3, -0.7) * matrix);
+        Suspension front_left_suspension = wheel_suspension({}, Vec3f(0, 0, -1), -0.25f, 0.7f);
 
-        m_builder.get_state().set_matrix(caster_matrix * Matrix4f::translation_matrix(2, 3, -0.7));
-        Suspension back_left_suspension = wheel_suspension({}, Vec3f(0, 0, -1), 0.0f, 1.5);
+        m_builder.get_state().set_matrix(caster_matrix * Matrix4f::translation_matrix(1.5, 3, -0.7) * matrix);
+        Suspension back_left_suspension = wheel_suspension({}, Vec3f(0, 0, -1), -0.25f, 0.7f);
 
-        m_builder.get_state().set_matrix(caster_matrix * Matrix4f::translation_matrix(-2, 3, 0.7));
-        Suspension front_right_suspension = wheel_suspension({}, Vec3f(0, 0, 1), 0.0f, 1.5);
+        m_builder.get_state().set_matrix(caster_matrix * Matrix4f::translation_matrix(-1.5, 3, 0.7) * matrix);
+        Suspension front_right_suspension = wheel_suspension({}, Vec3f(0, 0, 1), -0.25f, 0.7f);
 
-        m_builder.get_state().set_matrix(caster_matrix * Matrix4f::translation_matrix(2, 3, 0.7));
-        Suspension back_right_suspension = wheel_suspension({}, Vec3f(0, 0, 1), 0.0f, 1.5);
+        m_builder.get_state().set_matrix(caster_matrix * Matrix4f::translation_matrix(1.5, 3, 0.7) * matrix);
+        Suspension back_right_suspension = wheel_suspension({}, Vec3f(0, 0, 1), -0.25f, 0.7f);
 
-        m_builder.get_state().set_matrix({});
+        m_builder.get_state().set_matrix(matrix);
 
         // Add four wheels
 
@@ -114,15 +115,15 @@ public:
         m_builder.get_state().m_vertex_floor_friction = 2.0f;
 
         ModelBuilder::build_wheel(m_builder, front_left_suspension.wheel_anchor1, front_left_suspension.wheel_anchor2,
-                                  0.7f, 16, 0.5);
+                                  1.0f, 16, 0.5);
         ModelBuilder::build_wheel(m_builder, back_left_suspension.wheel_anchor1, back_left_suspension.wheel_anchor2,
-                                  0.7f, 16, 0.5);
+                                  1.0f, 16, 0.5);
         ModelBuilder::build_wheel(m_builder, front_right_suspension.wheel_anchor1, front_right_suspension.wheel_anchor2,
-                                  0.7f, 16, 0.5);
+                                  1.0f, 16, 0.5);
         ModelBuilder::build_wheel(m_builder, back_right_suspension.wheel_anchor1, back_right_suspension.wheel_anchor2,
-                                  0.7f, 16, 0.5);
+                                  1.0f, 16, 0.5);
 
-        m_builder.get_state().m_vertex_floor_friction = 0.5f;
+        m_builder.get_state().m_vertex_floor_friction = 0.1f;
         m_builder.get_state().m_spring_strength = 1000;
 
         // Connect suspension steer nodes
@@ -131,6 +132,8 @@ public:
         m_builder.spring(back_left_suspension.steering_node, back_right_suspension.steering_node);
 
         // Connect suspensions together
+
+        m_builder.get_state().m_spring_strength = 500;
 
         m_builder.springs_between(front_left_suspension.body_connections.bottom_front,
                                   front_right_suspension.body_connections.bottom_front,
@@ -176,6 +179,9 @@ public:
 
         m_front_steering_spring = m_builder.spring(front_left_suspension.body_connections.bottom_front, front_right_suspension.steering_node);
         m_back_steering_spring = m_builder.spring(back_left_suspension.body_connections.bottom_front, back_right_suspension.steering_node);
+
+        m_builder.jet(back_left_suspension.body_connections.up_back, back_left_suspension.body_connections.up_front, 40.0f);
+        m_builder.jet(back_right_suspension.body_connections.up_back, back_right_suspension.body_connections.up_front, 40.0f);
 
         m_builder.jet(front_left_suspension.body_connections.up_front, front_left_suspension.body_connections.up_back, 40.0f);
         m_builder.jet(front_right_suspension.body_connections.up_front, front_right_suspension.body_connections.up_back, 40.0f);

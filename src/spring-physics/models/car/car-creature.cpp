@@ -5,8 +5,10 @@
 #include "../builder/wheel.hpp"
 #include "car-factory.hpp"
 
-CarCreature::CarCreature(World *world): m_world(world) {
+CarCreature::CarCreature(World *world, const Matrix4f& transform): m_world(world) {
     ModelBuilder::Builder builder;
+
+    builder.get_state().set_matrix(transform);
 
     CarFactory factory(builder);
     factory.build();
@@ -23,6 +25,7 @@ CarCreature::CarCreature(World *world): m_world(world) {
 
 void CarCreature::set_controls(Vec3f controls) {
     float steering = controls.x;
+    float throttle = controls.y;
 
     float steering_max = 0.2f;
 
@@ -33,10 +36,18 @@ void CarCreature::set_controls(Vec3f controls) {
     float front_steering_length = m_front_steering_spring_length - steering * steering_max;
 
     m_creature->get_springs()[m_front_steering_spring]->get_physics_spring()->m_target_length = front_steering_length;
+
+    float forward = std::max(0.0f, throttle);
+    float backward = std::max(0.0f, -throttle);
+
+    m_creature->get_jet_objects()[0]->get_physics_jet()->m_force = m_creature->get_jet_objects()[0]->get_max_force() * forward;
+    m_creature->get_jet_objects()[1]->get_physics_jet()->m_force = m_creature->get_jet_objects()[1]->get_max_force() * forward;
+    m_creature->get_jet_objects()[2]->get_physics_jet()->m_force = m_creature->get_jet_objects()[2]->get_max_force() * backward;
+    m_creature->get_jet_objects()[3]->get_physics_jet()->m_force = m_creature->get_jet_objects()[3]->get_max_force() * backward;
+
+
 }
 
 void CarCreature::set_throttle(float throttle) {
-    for (auto &jet: m_creature->get_jet_objects()) {
-        jet->get_physics_jet()->m_force = jet->get_max_force() * throttle;
-    }
+
 }

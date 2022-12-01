@@ -98,3 +98,15 @@ void JetObject::tick(float dt) {
 
     m_geometry_object->set_transform(transform);
 }
+
+void JetObject::set_max_force(float force) {
+    m_max_force = force;
+}
+
+float JetObject::get_max_force() const {
+    return m_max_force;
+}
+
+PhysicsJet *JetObject::get_physics_jet() {
+    return m_physics_jet.get();
+}

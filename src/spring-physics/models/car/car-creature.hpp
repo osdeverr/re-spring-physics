@@ -5,7 +5,7 @@
 class CarCreature : public ControllableCreature {
 
 public:
-    CarCreature(World* world);
+    CarCreature(World* world, const Matrix4f& transform);
     ~CarCreature() override = default;
 
     void set_controls(Vec3f controls) override;

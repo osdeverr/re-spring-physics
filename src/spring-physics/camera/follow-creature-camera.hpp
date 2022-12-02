@@ -3,10 +3,11 @@
 #include "camera-controller.hpp"
 #include "../../graphics/camera.hpp"
 #include "../creatures/creature.hpp"
+#include "../controllable-creature.hpp"
 
 class FollowCreatureCamera : public CameraController {
 public:
-    explicit FollowCreatureCamera(Camera *camera, Creature *creature) : m_camera(camera), m_creature(creature) {};
+    explicit FollowCreatureCamera(Camera *camera, ControllableCreature *creature) : m_camera(camera), m_creature(creature) {};
 
     void tick(float delta_time) override;
 
@@ -18,7 +19,7 @@ public:
 
 private:
     Camera *m_camera;
-    Creature *m_creature;
+    ControllableCreature *m_creature;
     float m_speed = 4.0;
     float m_rotation_speed = 2.0;
 

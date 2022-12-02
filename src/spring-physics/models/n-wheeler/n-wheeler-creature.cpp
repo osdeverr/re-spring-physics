@@ -85,7 +85,6 @@ void NWheelerCreature::set_controls(Vec3f controls) {
 
     for (int i = 0; i < m_axles; i++) {
         int spring = m_steering_springs[i];
-        float spring_length = m_steering_spring_length;
         float steering_factor = steering * (((float)i / (float)m_axles) * 2.0f - 1.0f) * steering_max;
 
         m_creature->get_springs()[spring]->get_physics_spring()->m_target_length = m_steering_spring_length * (1 + steering_factor);

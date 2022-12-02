@@ -2,7 +2,7 @@
 #include "follow-creature-camera.hpp"
 
 void FollowCreatureCamera::tick(float delta_time) {
-    Vec3f creature_position = m_creature->get_center();
+    Vec3f creature_position = m_creature->get_camera_binding_point();
 
     Vec3f delta = creature_position - m_old_creature_position;
     m_old_creature_position = creature_position;

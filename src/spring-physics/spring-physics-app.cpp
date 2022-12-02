@@ -9,6 +9,7 @@
 #include "models/car/car-creature.hpp"
 #include "models/builder/model-builder.hpp"
 #include "models/n-wheeler/n-wheeler-creature.hpp"
+#include "models/train/train-creature.hpp"
 
 SpringPhysicsApp::SpringPhysicsApp() : GeneralApp() {
     create_window(2200, 1600);
@@ -106,7 +107,7 @@ SpringPhysicsApp::SpringPhysicsApp() : GeneralApp() {
 //    Let's do some huge refactoring, baby!
 
     if(m_creature) {
-        m_camera_controller = std::make_unique<FollowCreatureCamera>(m_camera.get(), m_creature->get_creature());
+        m_camera_controller = std::make_unique<FollowCreatureCamera>(m_camera.get(), m_creature.get());
     } else {
         m_camera_controller = std::make_unique<FreeCameraController>(m_camera.get());
     }
@@ -227,7 +228,7 @@ void SpringPhysicsApp::on_key_release(sf::Keyboard::Key key) {
             if (m_free_camera || !m_creature) {
                 m_camera_controller = std::make_unique<FreeCameraController>(m_camera.get());
             } else {
-                m_camera_controller = std::make_unique<FollowCreatureCamera>(m_camera.get(), m_creature->get_creature());
+                m_camera_controller = std::make_unique<FollowCreatureCamera>(m_camera.get(), m_creature.get());
             }
             m_user_controller.set_camera_controller(m_camera_controller.get());
         default:
@@ -238,5 +239,6 @@ void SpringPhysicsApp::on_key_release(sf::Keyboard::Key key) {
 void SpringPhysicsApp::build_model(const Matrix4f& transform) {
 //    m_creature = std::make_unique<AirplaneCreature>(m_world.get(), transform);
 //    m_creature = std::make_unique<CarCreature>(m_world.get(), transform);
-    m_creature = std::make_unique<NWheelerCreature>(m_world.get(), transform);
+//    m_creature = std::make_unique<NWheelerCreature>(m_world.get(), transform);
+    m_creature = std::make_unique<TrainCreature>(m_world.get(), transform);
 }

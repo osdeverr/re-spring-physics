@@ -17,29 +17,29 @@ namespace ModelBuilder {
             m_inverse_transform = matrix.inverse();
         }
 
-        const Matrix4f& get_matrix() const {
+        const Matrix4f &get_matrix() const {
             return m_transform;
         }
 
-        const Matrix4f& get_inverse_matrix() const {
+        const Matrix4f &get_inverse_matrix() const {
             return m_inverse_transform;
         }
 
     private:
-        Matrix4f m_transform {};
-        Matrix4f m_inverse_transform {};
+        Matrix4f m_transform{};
+        Matrix4f m_inverse_transform{};
     };
 
     class Builder {
         CreatureConfig m_config;
-        BuilderState m_state {};
+        BuilderState m_state{};
         std::vector<BuilderState> m_state_stack{};
     public:
         Builder() = default;
 
         ~Builder() = default;
 
-        BuilderState& get_state() {
+        BuilderState &get_state() {
             return m_state;
         }
 
@@ -54,7 +54,8 @@ namespace ModelBuilder {
 
         int vertex(Vec3f point) {
             point *= m_state.get_matrix();
-            m_config.m_vertices.push_back(VertexConfig{m_state.m_vertex_weight, m_state.m_vertex_floor_friction, point});
+            m_config.m_vertices.push_back(
+                    VertexConfig{m_state.m_vertex_weight, m_state.m_vertex_floor_friction, point});
             return m_config.m_vertices.size() - 1;
         }
 
@@ -70,7 +71,8 @@ namespace ModelBuilder {
 
         float get_spring_length(int spring_index) {
             auto &spring = m_config.m_springs[spring_index];
-            return (get_vertex_pos(spring.m_vertex_a_index) - get_vertex_pos(spring.m_vertex_b_index)).len();
+            return (m_config.m_vertices[spring.m_vertex_a_index].m_position -
+                    m_config.m_vertices[spring.m_vertex_b_index].m_position).len();
         }
 
         int surface(int a, int b, int c) {
@@ -84,13 +86,13 @@ namespace ModelBuilder {
         }
 
         void translate(Vec3f offset) {
-            for(auto& vertex : m_config.m_vertices) {
+            for (auto &vertex: m_config.m_vertices) {
                 vertex.m_position += offset;
             }
         }
 
         void scale(Vec3f scale) {
-            for(auto& vertex : m_config.m_vertices) {
+            for (auto &vertex: m_config.m_vertices) {
                 vertex.m_position *= scale;
             }
         }
@@ -101,8 +103,8 @@ namespace ModelBuilder {
         }
 
         void springs_between_range(int begin, int end) {
-            for(int i = begin; i < end; i++) {
-                for(int j = i + 1; j < end; j++) {
+            for (int i = begin; i < end; i++) {
+                for (int j = i + 1; j < end; j++) {
                     spring(i, j);
                 }
             }
@@ -111,22 +113,22 @@ namespace ModelBuilder {
         template<typename... Args>
         void springs_between(Args... args) {
             int vertices[] = {args...};
-            for(int i = 0; i < sizeof...(args); i++) {
-                for(int j = i + 1; j < sizeof...(args); j++) {
+            for (int i = 0; i < sizeof...(args); i++) {
+                for (int j = i + 1; j < sizeof...(args); j++) {
                     spring(vertices[i], vertices[j]);
                 }
             }
         }
 
         void springs_between(std::span<int> vertices) {
-            for(int i = 0; i < vertices.size(); i++) {
-                for(int j = i + 1; j < vertices.size(); j++) {
+            for (int i = 0; i < vertices.size(); i++) {
+                for (int j = i + 1; j < vertices.size(); j++) {
                     spring(vertices[i], vertices[j]);
                 }
             }
         }
 
-        CreatureConfig& get_config() {
+        CreatureConfig &get_config() {
             return m_config;
         }
 

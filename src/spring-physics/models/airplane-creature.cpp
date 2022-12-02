@@ -8,9 +8,9 @@
 AirplaneCreature::AirplaneCreature(World *world, const Matrix4f &transform) : m_world(world) {
     ModelBuilder::Builder builder;
 
-    builder.get_state().set_matrix(transform
+    builder.get_state().set_matrix(Matrix4f::scale_matrix(0.3f, 0.3f, 0.3f)
                                    * Matrix4f::translation_matrix(0.0f, 1.0f, 0.0f)
-                                   * Matrix4f::scale_matrix(0.3f, 0.3f, 0.3f));
+                                   * transform);
 
     // Build a cube with 8 vertices and 12 edges
 
@@ -264,11 +264,11 @@ AirplaneCreature::AirplaneCreature(World *world, const Matrix4f &transform) : m_
 
     builder.calculate_mass();
 
-    m_left_aileron_muscle_length = (builder.get_vertex_pos(23) - builder.get_vertex_pos(16)).len();
-    m_right_aileron_muscle_length = (builder.get_vertex_pos(24) - builder.get_vertex_pos(17)).len();
+    m_left_aileron_muscle_length = builder.get_spring_length(m_left_aileron_spring);
+    m_right_aileron_muscle_length = builder.get_spring_length(m_right_aileron_spring);
 
-    m_left_elevator_muscle_length = (builder.get_vertex_pos(27) - builder.get_vertex_pos(14)).len();
-    m_right_elevator_muscle_length = (builder.get_vertex_pos(28) - builder.get_vertex_pos(15)).len();
+    m_left_elevator_muscle_length = builder.get_spring_length(m_left_elevator_spring);
+    m_right_elevator_muscle_length = builder.get_spring_length(m_right_elevator_spring);
 
     m_creature = std::make_unique<Creature>(m_world, builder.get_config());
     m_creature->make_visible();

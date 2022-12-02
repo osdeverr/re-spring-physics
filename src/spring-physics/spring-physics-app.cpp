@@ -8,6 +8,7 @@
 #include "models/airplane-creature.hpp"
 #include "models/car/car-creature.hpp"
 #include "models/builder/model-builder.hpp"
+#include "models/n-wheeler/n-wheeler-creature.hpp"
 
 SpringPhysicsApp::SpringPhysicsApp() : GeneralApp() {
     create_window(2200, 1600);
@@ -27,7 +28,22 @@ SpringPhysicsApp::SpringPhysicsApp() : GeneralApp() {
 //    m_world->get_surface_mesh().push_back(std::make_unique<SurfaceTriangleObject>(m_world.get(), Vec3f {-20, 0, -5}, Vec3f {-20, 0, 5}, Vec3f {-100, 5, -5}));
 //    m_world->get_surface_mesh().push_back(std::make_unique<SurfaceTriangleObject>(m_world.get(), Vec3f {-20, 0, 5}, Vec3f {-100, 5, -5}, Vec3f {-100, 5, 5}));
 
-//    load_obj("resources/maps/map3.obj", m_world.get(), Matrix4f::scale_matrix(0.4, 0.4, 0.4) * Matrix4f::rotation_x_matrix(0.1) * Matrix4f::rotation_y_matrix(-1.4) * Matrix4f::translation_matrix(-50, 0, 0));
+    // Map with car
+//    {
+//        m_map_object = std::make_unique<MapObject>(m_world.get(), "resources/maps/map.obj", Matrix4f::scale_matrix(0.01, 0.01, 0.01));
+        // On the border (for car & physics testing)
+//        build_model(Matrix4f::translation_matrix(0, 22, 0.35f) * Matrix4f::rotation_x_matrix(0.1) * Matrix4f::rotation_y_matrix(M_PI / 2));
+
+        // On the road (for airplane)
+//        build_model(Matrix4f::translation_matrix(0, 25, -3.0f) * Matrix4f::rotation_x_matrix(0.1) * Matrix4f::rotation_y_matrix(M_PI / 2));
+//    }
+
+    // Map2 with car
+    {
+        m_map_object = std::make_unique<MapObject>(m_world.get(), "resources/maps/map2.obj", Matrix4f::scale_matrix(0.03, 0.03, 0.03) * Matrix4f::translation_matrix(0, 5, 0));
+        // On the border (for car & physics testing)
+        build_model({});
+    }
 
     // Collision test
 //    {
@@ -59,13 +75,6 @@ SpringPhysicsApp::SpringPhysicsApp() : GeneralApp() {
 //
 //        (new Creature(m_world.get(), builder.get_config()))->make_visible();
 //    }
-
-    // Map with car
-    {
-        m_map_object = std::make_unique<MapObject>(m_world.get(), "resources/maps/map.obj", Matrix4f::scale_matrix(0.01, 0.01, 0.01));
-        build_model(Matrix4f::translation_matrix(0, 22, 0.35f) * Matrix4f::rotation_x_matrix(0.1) * Matrix4f::rotation_y_matrix(M_PI / 2));
-    }
-//    build_model(Matrix4f::translation_matrix(0, 22, -3.0f) * Matrix4f::rotation_x_matrix(0.1) * Matrix4f::rotation_y_matrix(M_PI / 2));
 
 // Collision test 2
 //    {
@@ -228,5 +237,6 @@ void SpringPhysicsApp::on_key_release(sf::Keyboard::Key key) {
 
 void SpringPhysicsApp::build_model(const Matrix4f& transform) {
 //    m_creature = std::make_unique<AirplaneCreature>(m_world.get(), transform);
-    m_creature = std::make_unique<CarCreature>(m_world.get(), transform);
+//    m_creature = std::make_unique<CarCreature>(m_world.get(), transform);
+    m_creature = std::make_unique<NWheelerCreature>(m_world.get(), transform);
 }

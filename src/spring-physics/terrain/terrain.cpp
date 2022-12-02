@@ -36,5 +36,5 @@ void Terrain::ensure_valid() {
 
 void Terrain::query(const Vec3f &from, const Vec3f &to, std::vector<TerrainPolygon *> &result) {
     assert(bvh_valid);
-    m_bvh.query(m_bvh.m_root, m_bvh.min(from, to), m_bvh.max(from, to), result);
+    m_bvh.query(m_bvh.m_root, m_bvh.get_min(from, to), m_bvh.get_max(from, to), result);
 }

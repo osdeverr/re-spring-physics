@@ -45,9 +45,6 @@ TerrainPolygon::collides(Vec3f ray_origin, Vec3f ray_direction, float distance, 
         float capsule_distance = dist_point_segment(ray_origin, edge_start, edge_end);
 
         if(capsule_distance < m_thickness || (capsule_intersect_distance >= 0 && capsule_intersect_distance < distance)) {
-            if(capsule_intersect_distance < -0.5f) {
-                std::cout << "what?\n";
-            }
             collision_distance = capsule_intersect_distance;
             Vec3f collision = ray_origin + ray_direction * collision_distance;
             // Find out if collision does not have a projection on the triangle.
@@ -81,9 +78,6 @@ TerrainPolygon::collides(Vec3f ray_origin, Vec3f ray_direction, float distance, 
 
         // Check if ray hits the triangle safe zone boundary
         if(check_hit(ray_origin - thickness_offset, ray_direction, &hit_distance)) {
-            if(hit_distance < -0.5f) {
-                std::cout << "what?\n";
-            }
             collision_distance = hit_distance;
             normal = m_normal;
             return true;

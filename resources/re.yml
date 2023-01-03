@@ -1,0 +1,7 @@
+type: static-library
+name: .resources
+
+actions:
+  copy-to-deps:
+    from: resources
+    to: .

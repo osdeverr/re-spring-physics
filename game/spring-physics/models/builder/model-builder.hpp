@@ -2,6 +2,7 @@
 
 #include "../../creatures/creature-config.hpp"
 #include <span>
+#include <cassert>
 
 namespace ModelBuilder {
 

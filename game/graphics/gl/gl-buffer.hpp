@@ -56,6 +56,9 @@ public:
 
 template<typename T>
 void GLBuffer<T>::synchronize(BufferRange range) {
+    if(m_host_array.empty())
+        return;
+
     glBindBuffer((GLenum)m_type, m_gl_buffer_handle);
     if((long)(m_host_array.size() * sizeof(T)) != gl_buffer_capacity) {
         glBufferData((GLenum)m_type, m_host_array.size() * sizeof(T), &m_host_array[0], (GLenum)m_usage);

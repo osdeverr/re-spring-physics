@@ -13,9 +13,17 @@
 #include <iostream>
 #include "matrix4.hpp"
 
+#ifdef _MSC_VER
+#include <glm/vec3.hpp>
+#endif
+
 template<typename T>
 struct Vec3 {
+#ifdef _MSC_VER
+    typedef glm::vec<3, T, glm::qualifier::packed_highp> content3;
+#else
     typedef T content3 __attribute__((ext_vector_type(4)));
+#endif
 
     union {
         content3 m_content;
@@ -79,7 +87,7 @@ struct Vec3 {
 
     inline Vec3<T> operator+() { return *this; }
 
-    inline Vec3<T> operator-() const { return Vec3 {m_content * -1}; }
+    inline Vec3<T> operator-() const { return Vec3 {m_content * T{-1}}; }
 
     inline Vec3<T> operator+(const Vec3<T> &second) const { return Vec3 {m_content + second.m_content}; }
 

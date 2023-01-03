@@ -1,6 +1,8 @@
 
 #include "terrain-bvh.hpp"
 
+#include <algorithm>
+
 Vec3f TerrainBVH::get_min(TerrainPolygon &triangle) {
     Vec3f result = get_min(triangle.get_point_a(), triangle.get_point_b());
     result = get_min(result, triangle.get_point_c());

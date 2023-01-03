@@ -1,0 +1,4 @@
+type: project
+name: spring-physics
+
+cxx-version: 20

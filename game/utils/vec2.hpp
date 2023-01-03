@@ -13,12 +13,20 @@
 #include <iostream>
 #include "matrix3.hpp"
 
+#ifdef _MSC_VER
+#include <glm/vec2.hpp>
+#endif
+
 template<typename T>
 struct PackedVec2;
 
 template<typename T>
 struct Vec2 {
+#ifdef _MSC_VER
+    typedef glm::vec<2, T, glm::qualifier::packed_highp> content2;
+#else
     typedef T content2 __attribute__((ext_vector_type(2)));
+#endif
 
     union {
         content2 m_content;
@@ -70,7 +78,7 @@ struct Vec2 {
 
     inline Vec2<T> operator+() { return *this; }
 
-    inline Vec2<T> operator-() const { return Vec2 {m_content * -1}; }
+    inline Vec2<T> operator-() const { return Vec2 {m_content * T{-1}}; }
 
     inline Vec2<T> operator+(const Vec2<T> &second) const { return Vec2 {m_content + second.m_content}; }
 

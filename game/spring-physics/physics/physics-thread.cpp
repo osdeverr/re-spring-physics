@@ -2,8 +2,10 @@
 // Created by Артем on 05.02.2022.
 //
 
-#include <MacTypes.h>
+// #include <MacTypes.h>
 #include "physics-thread.hpp"
+
+#include <cassert>
 
 PhysicsThread::PhysicsThread(ConcurrentPhysicsEngine *engine) : AsyncTask(), m_engine(engine) {}
 

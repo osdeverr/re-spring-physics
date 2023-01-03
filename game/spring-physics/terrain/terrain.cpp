@@ -1,5 +1,6 @@
 
 #include "terrain.hpp"
+#include <cassert>
 
 TerrainPolygon *Terrain::add_triangle(Vec3f vertex_a, Vec3f vertex_b, Vec3f vertex_c) {
     auto triangle = std::make_unique<TerrainPolygon>(vertex_a, vertex_b, vertex_c);

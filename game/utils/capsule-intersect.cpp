@@ -1,6 +1,8 @@
 
 #include "capsule-intersect.hpp"
 
+#include <algorithm>
+
 float dist_point_segment(const Vec3f& p, const Vec3f& a, const Vec3f& b) {
     Vec3f pa = p - a;
     Vec3f ba = b - a;

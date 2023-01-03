@@ -3,6 +3,8 @@
 #include "camera.hpp"
 #include "../utils/vec2.hpp"
 
+#include <cmath>
+
 class PerspectiveCamera : public Camera {
     float m_fov = 60.0f / 180.0f * M_PI;
     float m_aspect_ratio = 1.0;

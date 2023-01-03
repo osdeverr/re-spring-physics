@@ -16,9 +16,17 @@
 #include <SFML/Graphics/Color.hpp>
 #include "matrix4.hpp"
 
+#ifdef _MSC_VER
+#include <glm/vec4.hpp>
+#endif
+
 template<typename T>
 struct Vec4 {
+#ifdef _MSC_VER
+    typedef glm::vec<4, T, glm::qualifier::packed_highp> content4;
+#else
     typedef T content4 __attribute__((ext_vector_type(4)));
+#endif
 
     union {
         content4 content;
@@ -68,7 +76,7 @@ struct Vec4 {
 
     inline Vec4<T> operator+() { return *this; }
 
-    inline Vec4<T> operator-() const { return {content * -1}; }
+    inline Vec4<T> operator-() const { return {content * T{-1}}; }
 
     inline Vec4<T> operator+(const Vec4<T> &second) const { return {content + second.content}; }
 

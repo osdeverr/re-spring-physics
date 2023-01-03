@@ -1,0 +1,16 @@
+type: executable
+name: .game
+
+deps:
+  - vcpkg:freeimage
+  - vcpkg:opengl
+  - vcpkg:sfml
+  - vcpkg:glew
+  - .resources
+
+cxxenv.msvc:
+  cxx-compile-definitions:
+    _USE_MATH_DEFINES: 1 # Adds M_PI to math.h
+
+  deps:
+    - vcpkg:glm

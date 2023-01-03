@@ -4,10 +4,12 @@
 
 #ifdef __APPLE__
 #include <dispatch/dispatch.h>
-#else
+#elif __linux__
 #include <cstdint>
 #include <errno.h>
 #include <semaphore.h>
+#else
+#include <semaphore>
 #endif
 
 #ifdef __APPLE__
@@ -33,7 +35,7 @@ public:
     }
 };
 
-#else // todo: ELIF LINUX
+#elif __linux__ // todo: ELIF LINUX
 
 class Semaphore
 {
@@ -65,6 +67,37 @@ public:
 
     inline void post() {
         sem_post(&sem);
+    }
+};
+
+#else
+
+class Semaphore
+{
+    std::counting_semaphore<256> sem;
+
+    Semaphore(const Semaphore& other) = delete;
+    Semaphore& operator=(const Semaphore& other) = delete;
+
+public:
+    inline Semaphore(std::ptrdiff_t value = 0)
+        : sem{value}
+    {
+        // Do nothing
+    }
+
+    ~Semaphore()
+    {
+        // Do nothing
+    }
+
+    inline void wait()
+    {
+        sem.acquire();
+    }
+
+    inline void post() {
+        sem.release();
     }
 };
 
